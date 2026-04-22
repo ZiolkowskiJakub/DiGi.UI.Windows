@@ -30,6 +30,13 @@ namespace DiGi.UI.Windows.Classes
             };
 
             NotifyIcon.DoubleClick += (object? s, EventArgs e) => ShowWindow();
+
+            window = GetWindow();
+            if(window is not null)
+            {
+                window.Closing += OnWindowClosing;
+                window.Deactivated += OnWindowDeactivated;
+            }
         }
 
         protected abstract TWindow GetWindow();
@@ -38,9 +45,7 @@ namespace DiGi.UI.Windows.Classes
         {
             if (window == null)
             {
-                window = GetWindow();
-                window.Closing += OnWindowClosing;
-                window.Deactivated += OnWindowDeactivated;
+                return;
             }
 
             if (window.IsVisible)
