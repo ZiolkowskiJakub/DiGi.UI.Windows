@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -6,12 +6,23 @@ using System.Diagnostics;
 
 namespace DiGi.UI.Windows.Classes
 {
+    /// <summary>
+    /// Provides a base application context for applications that reside in the system tray and manage a specific window type.
+    /// </summary>
+    /// <typeparam name="TWindow">The type of the Window managed by this context, which must inherit from <see cref="Window"/>.</typeparam>
     public abstract class TrayApplicationContext<TWindow> : ApplicationContext where TWindow : Window
     {
+        /// <summary>
+        /// The system tray icon used for application notifications and interaction.
+        /// </summary>
         protected readonly NotifyIcon? NotifyIcon;
         private TWindow? window;
         private bool isExiting = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrayApplicationContext{TWindow}"/> class.
+        /// </summary>
+        /// <param name="text">The text to display as a tooltip when hovering over the tray icon.</param>
         public TrayApplicationContext(string text)
         {
             // 1. Setup Context Menu
@@ -39,6 +50,10 @@ namespace DiGi.UI.Windows.Classes
             }
         }
 
+        /// <summary>
+        /// When overridden in a derived class, returns the window instance associated with this application context.
+        /// </summary>
+        /// <returns>The <typeparamref name="TWindow"/> instance.</returns>
         protected abstract TWindow GetWindow();
 
         private void ShowWindow()
